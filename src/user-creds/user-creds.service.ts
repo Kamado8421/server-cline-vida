@@ -28,8 +28,8 @@ export class UserCredsService {
           password: await bcrypt.hash(createUserCredDto.password, 10),
         }
       })
-      
-      
+
+
       return { ...data, password: undefined }
 
     } catch (error) {
@@ -44,12 +44,35 @@ export class UserCredsService {
     const prisma = new PrismaClient();
 
     const user = await prisma.userCreds.findUnique({
-      where: {
-        email
-      }
+      where: { email }
     });
 
     return user;
+  }
+
+  async findUserFullByEmail(email: string) {
+    const prisma = new PrismaClient();
+
+    const user = await prisma.userCreds.findUnique({
+      where: { email }
+    });
+
+    if (user) {
+      const info = await prisma.userInfo.findUnique({
+        where: {
+          userId: user.id
+        }
+      })
+
+      const data = {
+        user: { ...user },
+        info: { ...info }
+      }
+      
+      return data;
+    }
+
+
   }
 
 }
