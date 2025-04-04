@@ -4,6 +4,7 @@ import * as bcrypt from 'bcrypt';
 import { UserCred } from 'src/user-creds/entities/user-cred.entity';
 import { UserPayload } from './models/UserPayload';
 import { JwtService } from '@nestjs/jwt';
+import { IsPublic } from './decorators/is-public.decorator';
 
 type UserToken = {
     access_token: string
@@ -15,6 +16,7 @@ export class AuthService {
         private readonly userCredsService: UserCredsService,
         private readonly jwtService: JwtService
     ) { }
+
 
     login(user: UserCred): UserToken {
         const payload: UserPayload = {
