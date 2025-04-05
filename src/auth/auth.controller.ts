@@ -1,5 +1,5 @@
 import { AuthService } from './auth.service';
-import { Controller, HttpCode, HttpStatus, Post, Request, UseGuards } from '@nestjs/common';
+import { Controller, Get, HttpCode, HttpStatus, Post, Request, UseGuards } from '@nestjs/common';
 import { LocalAuthGuard } from './guards/local-auth.guard';
 import { AuthRequest } from './models/Auth-request';
 import { IsPublic } from './decorators/is-public.decorator';
@@ -15,4 +15,5 @@ export class AuthController {
     async login(@Request() req: AuthRequest){
         return this.authService.login(req.user);
     }
+
 }
